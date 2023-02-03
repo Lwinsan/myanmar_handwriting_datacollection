@@ -1,2 +1,8 @@
-certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
+pandas
+numpy
+pillow
+distlib==0.3.6
+filelock==3.9.0
+platformdirs==2.6.2
+virtualenv==20.17.1
 wincertstore==0.2

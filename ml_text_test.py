@@ -6,20 +6,48 @@ from io import BytesIO
 #from Pillow import Image
 import os
 
-# Create a folder to store the collected images
-if not os.path.exists("handwriting_images"):
-    os.makedirs("handwriting_images")
+import base64
 
-st.header("မြန်မာအက္ခရာ")
+
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
+        background-size: cover
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+add_bg_from_local('bg_image.jpg')   
+
+
+
+
+
+st.header("မြန်မာလက်ရေး အက္ခရာ ဒေတာစုခြင်း")
 
 col1, col2 = st.columns([1,1])
 
 # Create a folder to store the collected images
-if not os.path.exists("handwriting_images"):
-    os.makedirs("handwriting_images")
+#if not os.path.exists("handwriting_images"):
+    #os.makedirs("handwriting_images")
+    
+    
+# Get the folder path
+folder_path = os.path.join(os.getcwd(), "myanmar_handwriting_images")
+
+# Create the folder if it doesn't exist
+if not os.path.exists(folder_path):
+    os.makedirs(folder_path)
 
 #text = st.text_input('Enter Alphabet!')
 
+st.subheader("၁။ ရေးမည့်စာလုံးအားရွေးချယ်ပါ...")
 # Store the initial value of widgets in session state
 if "visibility" not in st.session_state:
     st.session_state.visibility = "visible"
@@ -35,26 +63,30 @@ text = st.selectbox(
 col1, col2 = st.columns([1,1])
 
 with col1:
+    st.subheader("၂။ ဤနေရာတွင်ရေးပါ ...⬇️")
+    
     canvas_result = st_canvas(
         fill_color="rgba(255, 165, 0, 0.3)",
-        stroke_width=13,
+        stroke_width=20,
         stroke_color="black",
         background_color="white",
-        height=200,
-        width=200,
+        height=350,
+        width=350,
         drawing_mode="freedraw",
         key="canvas",
     )
 
 
 if canvas_result.image_data is not None:
-    with col2:
-        st.image(canvas_result.image_data)
+    #with col2:
+        #st.image(canvas_result.image_data)
+        #st.write("##ဤကဲ့သို့ ကဲ့သို့သောပုံဖြင့် သိမ်းမည်လား....")
+        
         #submit = st.button("Save")
         
     im = Image.fromarray(canvas_result.image_data)
     
-    submit = st.button("Save")
+    submit = st.button("ဓါတ်ပုံအဖြင့်သိမ်းမည်")
     
     
     #image_counter = 0
@@ -66,12 +98,10 @@ if canvas_result.image_data is not None:
         #with open(f"handwriting_images/image_{image_counter}.png", "w") as f:
             #f.write(text)
         
-        im.save(f"handwriting_images/Alp_{image_counter}.png")
+        im.save(f"{folder_path}/Alp_{image_counter}.png")
         
-        st.success(f"Alp_{image_counter} saved successfully!")
+        st.success(f"{folder_path}Alp_{image_counter}")
+        st.success(f'"{image_counter}\" အား အထက်ပါ ဖိုင်လမ်းကြောင်းအတိုင် အောင်မြင်စွာသိမ်စည်းပြီးပါပြီ။')
         
 
-        
-        
-        
-        
+  

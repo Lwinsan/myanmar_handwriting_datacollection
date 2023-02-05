@@ -6,9 +6,9 @@ from io import BytesIO
 #from Pillow import Image
 import os
 
+
+
 import base64
-
-
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
@@ -33,17 +33,6 @@ st.header("မြန်မာလက်ရေး အက္ခရာ ဒေတာ�
 
 col1, col2 = st.columns([1,1])
 
-# Create a folder to store the collected images
-#if not os.path.exists("handwriting_images"):
-    #os.makedirs("handwriting_images")
-    
-    
-# Get the folder path
-folder_path = os.path.join(os.getcwd(), "myanmar_handwriting_images")
-
-# Create the folder if it doesn't exist
-if not os.path.exists(folder_path):
-    os.makedirs(folder_path)
 
 #text = st.text_input('Enter Alphabet!')
 
@@ -78,30 +67,16 @@ with col1:
 
 
 if canvas_result.image_data is not None:
-    #with col2:
-        #st.image(canvas_result.image_data)
-        #st.write("##ဤကဲ့သို့ ကဲ့သို့သောပုံဖြင့် သိမ်းမည်လား....")
-        
-        #submit = st.button("Save")
         
     im = Image.fromarray(canvas_result.image_data)
     
-    submit = st.button("ဓါတ်ပုံအဖြင့်သိမ်းမည်")
     
+# Add a download button
+if st.button("ဓါတ်ပုံအဖြင့်သိမ်းမည်"):
+    image_counter = text
+    file_path = os.path.expanduser(f"~/downloads/mAlp_{image_counter}.png")
+    im.save(file_path)
+    st.markdown(f"{file_path}")
+    st.markdown(f'"{image_counter}\" အား အထက်ပါ ဖိုင်လမ်းကြောင်းအတိုင် အောင်မြင်စွာသိမ်စည်းပြီးပါပြီ။')
+        
     
-    #image_counter = 0
-    
-    if submit:
-        # Increment the image counter
-        image_counter = text
-        
-        #with open(f"handwriting_images/image_{image_counter}.png", "w") as f:
-            #f.write(text)
-        
-        im.save(f"{folder_path}/Alp_{image_counter}.png")
-        
-        st.success(f"{folder_path}Alp_{image_counter}")
-        st.success(f'"{image_counter}\" အား အထက်ပါ ဖိုင်လမ်းကြောင်းအတိုင် အောင်မြင်စွာသိမ်စည်းပြီးပါပြီ။')
-        
-
-  

@@ -70,24 +70,15 @@ if canvas_result.image_data is not None:
         
     im = Image.fromarray(canvas_result.image_data)
     
+
     
 # Add a download button
 if st.button("ဓါတ်ပုံအဖြင့်သိမ်းမည်"):
     image_counter = text
     file_dir = os.path.abspath("downloads")
+    if not os.path.exists(file_dir):
+        os.makedirs(file_dir)
     file_path = os.path.join(file_dir, f"mAlp_{image_counter}.png")
     im.save(file_path)
     st.markdown(f"{file_path}")
     st.markdown(f'"{image_counter}" အား အထက်ပါ ဖိုင်လမ်းကြောင်းအတိုင် အောင်မြင်စွာသိမ်စည်းပြီးပါပြီ။')
-
-
-'''if st.button("ဓါတ်ပုံအဖြင့်သိမ်းမည်"):
-    image_counter = text
-    file_path = os.path.expanduser(f"~/downloads/mAlp_{image_counter}.png")
-    im.save(file_path)
-    st.markdown(f"{file_path}")
-    st.markdown(f'"{image_counter}\" အား အထက်ပါ ဖိုင်လမ်းကြောင်းအတိုင် အောင်မြင်စွာသိမ်စည်းပြီးပါပြီ။')
-  '''  
-    
-    
-    
